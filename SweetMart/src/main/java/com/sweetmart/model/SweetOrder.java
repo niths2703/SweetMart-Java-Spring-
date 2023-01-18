@@ -1,7 +1,8 @@
 package com.sweetmart.model;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -16,17 +17,19 @@ import javax.persistence.OneToMany;
 public class SweetOrder {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer SweetOrderID;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="customerID")
 	private Customer customer;
 	
-	private List<SweetItem> sweetItems;
 	
-	private LocalDate createdDate;
+	@OneToMany(cascade= CascadeType.ALL)
+	@JoinColumn(name="sweetItemId")
+	private Set<SweetItem> sweetItems = new HashSet<>();
+	
+	private LocalDate orderedDate;
 
 	
 	
