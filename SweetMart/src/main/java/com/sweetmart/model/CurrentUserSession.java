@@ -24,5 +24,8 @@ public class CurrentUserSession {
 	private Integer userId;
 	
 	private String uuid;
+	
+	private type type;
+	
 	private LocalDateTime localDateTime;
 }

@@ -27,16 +27,10 @@ public class SweetItem {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="sweetOrderId")
 	private SweetOrder sweetOrder;
-	
-	
 
 	private Integer quantity;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name= "productId")
-	private Product product;
-
-	
-	
-	
+	private Product product;	
 }

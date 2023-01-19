@@ -1,6 +1,6 @@
 package com.sweetmart.exception;
 
-public class LoginException extends Exception{
+public class LoginException extends RuntimeException{
 
 	public LoginException() {
 		// TODO Auto-generated constructor stub

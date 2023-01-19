@@ -1,12 +1,11 @@
 package com.sweetmart.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,16 +19,14 @@ import lombok.NoArgsConstructor;
 public class Administrator {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String id;
+	private Integer id;
+	
+	@Column(unique = true)
+	@Size(min = 10,max = 10,message = "Enter Valid Mobile Number")
+	private String mobile;
 	
 	private String password;
 	
 	@OneToOne(cascade=CascadeType.ALL)
-	private User  user;
-
-	
-	
-	
-	
+	private User  user;	
 }
