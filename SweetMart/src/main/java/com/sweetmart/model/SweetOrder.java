@@ -3,7 +3,6 @@ package com.sweetmart.model;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class SweetOrder {
 
@@ -24,15 +30,8 @@ public class SweetOrder {
 	@JoinColumn(name="customerID")
 	private Customer customer;
 	
-	
 	@OneToMany(cascade= CascadeType.ALL, mappedBy="sweetOrder")
 	private Set<SweetItem> sweetItems = new HashSet<>();
 	
 	private LocalDate orderedDate;
-
-	
-	
-	
-	
-
 }

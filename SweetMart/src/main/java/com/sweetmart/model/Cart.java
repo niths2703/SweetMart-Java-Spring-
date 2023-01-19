@@ -30,30 +30,15 @@ public class Cart {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer cartId;
 	
-	
-	
 	@OneToOne(cascade=CascadeType.ALL)
 	private Customer customer;
-	
-	
-	
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="sweetItemId")
 	private List<SweetOrder> sweetOrders;
    
-	
-	
 	private Integer totalPrice;
-	
 	
 	@Value("false")
 	private boolean isCheckout;
-	
-
-	
-   
-   
-	
-	
 }

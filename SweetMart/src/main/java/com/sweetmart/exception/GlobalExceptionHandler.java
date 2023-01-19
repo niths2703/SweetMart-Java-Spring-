@@ -36,10 +36,22 @@ public class GlobalExceptionHandler {
 
 //	******************************************* ADD CUSTOM EXCEPTION HERE *******************************************
 
-	//Login Exception Handler
-	
+	// Login Exception Handler
 	@ExceptionHandler(LoginException.class)
 	public ResponseEntity<MyErrorDetails> otherExceptionHandler(LoginException se, WebRequest req) {
+
+		MyErrorDetails err = new MyErrorDetails();
+		err.setTimestamp(LocalDateTime.now());
+		err.setMessage(se.getMessage());
+		err.setDetails(req.getDescription(false));
+
+		return new ResponseEntity<MyErrorDetails>(err, HttpStatus.BAD_REQUEST);
+	}
+
+	
+	// Login Exception Handler
+	@ExceptionHandler(UserException.class)
+	public ResponseEntity<MyErrorDetails> otherExceptionHandler(UserException se, WebRequest req) {
 
 		MyErrorDetails err = new MyErrorDetails();
 		err.setTimestamp(LocalDateTime.now());

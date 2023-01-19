@@ -1,9 +1,11 @@
 package com.sweetmart.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,60 +27,20 @@ public class User {
 	
 	private String passwordConfirm;
 	
-	private String type;
+	@Column(unique = true)
+	@Size(min = 10,max = 10,message = "Enter Valid Mobile Number")
+	private String mobile;
+	
+	private type type;
 
-	public User(int userID, String username, String password, String passwordConfirm, String type) {
+	public User(String username, String password, String passwordConfirm,
+			@Size(min = 10, max = 10, message = "Enter Valid Mobile Number") String mobile,
+			com.sweetmart.model.type type) {
 		super();
-		this.userID = userID;
 		this.username = username;
 		this.password = password;
 		this.passwordConfirm = passwordConfirm;
+		this.mobile = mobile;
 		this.type = type;
 	}
-
-	public User() {
-		super();
-	}
-
-	public int getUserID() {
-		return userID;
-	}
-
-	public void setUserID(int userID) {
-		this.userID = userID;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getPasswordConfirm() {
-		return passwordConfirm;
-	}
-
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-	
-	
 }
