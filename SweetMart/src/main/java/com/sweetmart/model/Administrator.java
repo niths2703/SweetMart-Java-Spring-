@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
@@ -18,24 +17,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class SweetItem {
+public class Administrator {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer sweetItemId;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private String id;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="sweetOrderId")
-	private SweetOrder sweetOrder;
+	private String password;
 	
-	
+	@OneToOne(cascade=CascadeType.ALL)
+	private User  user;
 
-	private Integer quantity;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name= "productId")
-	private Product product;
-
 	
 	
 	
