@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
 @Data
 @NoArgsConstructor
@@ -34,4 +35,12 @@ public class SweetOrder {
 	private Set<SweetItem> sweetItems = new HashSet<>();
 	
 	private LocalDate orderedDate;
+
+
+//	@Value("false")
+//	private boolean isCheckout;
+
+
+
+
 }

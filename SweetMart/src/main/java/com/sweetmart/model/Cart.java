@@ -39,6 +39,7 @@ public class Cart {
    
 	private Integer totalPrice;
 	
-	@Value("false")
-	private boolean isCheckout;
+
+
+
 }
