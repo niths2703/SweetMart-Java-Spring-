@@ -11,6 +11,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConstructorBinding;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import net.bytebuddy.implementation.bind.annotation.Default;
+
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Cart {
 
@@ -28,11 +40,15 @@ public class Cart {
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="sweetItemId")
-	private List<SweetItem> sweetItems;
+	private List<SweetOrder> sweetOrders;
    
 	
 	
 	private Integer totalPrice;
+	
+	
+	@Value("false")
+	private boolean isCheckout;
 	
 
 	

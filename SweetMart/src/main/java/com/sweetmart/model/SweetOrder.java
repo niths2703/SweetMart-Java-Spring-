@@ -25,8 +25,7 @@ public class SweetOrder {
 	private Customer customer;
 	
 	
-	@OneToMany(cascade= CascadeType.ALL)
-	@JoinColumn(name="sweetItemId")
+	@OneToMany(cascade= CascadeType.ALL, mappedBy="sweetOrder")
 	private Set<SweetItem> sweetItems = new HashSet<>();
 	
 	private LocalDate orderedDate;
