@@ -23,6 +23,5 @@ public class Product {
 	  
 	  private String price;
 	  
-	  private String ingradient;
-	  
+	  private String ingradient;	  
 }
