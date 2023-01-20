@@ -23,12 +23,15 @@ public class SweetItem {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer sweetItemId;
+
+
+	private Integer quantity;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="sweetOrderId")
 	private SweetOrder sweetOrder;
 
-	private Integer quantity;
+
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name= "productId")
