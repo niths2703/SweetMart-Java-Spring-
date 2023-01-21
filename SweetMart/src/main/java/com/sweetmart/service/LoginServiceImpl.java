@@ -20,7 +20,7 @@ import net.bytebuddy.utility.RandomString;
 
 @Service
 public class LoginServiceImpl implements LoginService{
-
+	
 	@Autowired
 	private CustomerDao cDao;
 	

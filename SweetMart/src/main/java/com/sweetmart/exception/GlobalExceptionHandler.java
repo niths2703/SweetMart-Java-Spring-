@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)
-	public ResponseEntity<MyErrorDetails> otherExceptionHandler(NoHandlerFoundException se, WebRequest req) {
+	public ResponseEntity<MyErrorDetails> NoHandlerFoundExceptionHandler(NoHandlerFoundException se, WebRequest req) {
 
 		MyErrorDetails err = new MyErrorDetails();
 		err.setTimestamp(LocalDateTime.now());
@@ -36,9 +36,9 @@ public class GlobalExceptionHandler {
 
 //	******************************************* ADD CUSTOM EXCEPTION HERE *******************************************
 
-	// Login Exception Handler
+	// Login LoginException Handler
 	@ExceptionHandler(LoginException.class)
-	public ResponseEntity<MyErrorDetails> otherExceptionHandler(LoginException se, WebRequest req) {
+	public ResponseEntity<MyErrorDetails> LoginExceptionHandler(LoginException se, WebRequest req) {
 
 		MyErrorDetails err = new MyErrorDetails();
 		err.setTimestamp(LocalDateTime.now());
@@ -49,9 +49,9 @@ public class GlobalExceptionHandler {
 	}
 
 	
-	// Login Exception Handler
+	// Login UserException Handler
 	@ExceptionHandler(UserException.class)
-	public ResponseEntity<MyErrorDetails> otherExceptionHandler(UserException se, WebRequest req) {
+	public ResponseEntity<MyErrorDetails> UserExceptionHandler(UserException se, WebRequest req) {
 
 		MyErrorDetails err = new MyErrorDetails();
 		err.setTimestamp(LocalDateTime.now());
@@ -61,9 +61,9 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<MyErrorDetails>(err, HttpStatus.BAD_REQUEST);
 	}
 
-
+	// Login SweetItemException Handler
 	@ExceptionHandler(SweetItemException.class)
-	public ResponseEntity<MyErrorDetails> otherExceptionHandler(SweetItemException se, WebRequest req) {
+	public ResponseEntity<MyErrorDetails> SweetItemExceptionHandler(SweetItemException se, WebRequest req) {
 
 		MyErrorDetails err = new MyErrorDetails();
 		err.setTimestamp(LocalDateTime.now());
@@ -72,10 +72,10 @@ public class GlobalExceptionHandler {
 
 		return new ResponseEntity<MyErrorDetails>(err, HttpStatus.BAD_REQUEST);
 	}
-
-
+	
+	// Login SweetOrderException Handler
 	@ExceptionHandler(SweetOrderException.class)
-	public ResponseEntity<MyErrorDetails> otherExceptionHandler(SweetOrderException se, WebRequest req){
+	public ResponseEntity<MyErrorDetails> SweetOrderExceptionHandler(SweetOrderException se, WebRequest req) {
 
 		MyErrorDetails err = new MyErrorDetails();
 		err.setTimestamp(LocalDateTime.now());
@@ -83,9 +83,5 @@ public class GlobalExceptionHandler {
 		err.setDetails(req.getDescription(false));
 
 		return new ResponseEntity<MyErrorDetails>(err, HttpStatus.BAD_REQUEST);
-
-
 	}
-
-
 }
