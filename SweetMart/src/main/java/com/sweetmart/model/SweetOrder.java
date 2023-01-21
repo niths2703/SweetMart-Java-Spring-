@@ -1,9 +1,8 @@
 package com.sweetmart.model;
 
-import java.time.LocalDate;
-import java.util.HashSet;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,10 +13,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 
 @Data
 @NoArgsConstructor
@@ -38,7 +37,7 @@ public class SweetOrder {
 	@OneToMany(cascade= CascadeType.ALL, mappedBy="sweetOrder")
 	private List<SweetItem> sweetItems ;
 
-	private LocalDate orderedDate;
+	private LocalDateTime orderedDate;
 	
 	
 	private Boolean  isOrderPalced= false;
