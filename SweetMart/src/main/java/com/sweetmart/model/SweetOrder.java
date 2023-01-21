@@ -35,6 +35,9 @@ public class SweetOrder {
 	private Set<SweetItem> sweetItems = new HashSet<>() ;
 	
 	private LocalDate orderedDate;
+	
+	
+	private Boolean  isOrderPalced;
 
 
 //	@Value("false")

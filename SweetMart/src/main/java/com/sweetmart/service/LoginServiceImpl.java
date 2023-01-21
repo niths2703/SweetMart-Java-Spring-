@@ -87,5 +87,27 @@ public class LoginServiceImpl implements LoginService{
 		
 		return "Logged Out !";
 	}
+	
+	
+	
+	
+	@Override
+	public User checkForCrendentialsService(String key) throws LoginException {
+		// TODO Auto-generated method stub
+       CurrentUserSession currentUserSession =  sDao.findByUuid(key);
+		 
+		 if(currentUserSession != null) {   
+			      Optional<User> user  =   userDao.findById(currentUserSession.getUserId());
+			        if(user != null) {
+			        	   return  user.get();
+			        }else {
+			        	 throw new LoginException("You are not logined Yet !");
+			        }
+		 }else {
+			    throw new LoginException("You are not logined Yet !");
+		 }
+		 
+	        
+	}
 
 }
