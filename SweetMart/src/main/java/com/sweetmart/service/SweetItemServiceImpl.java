@@ -22,36 +22,43 @@ import java.util.Optional;
 @Service
 public class SweetItemServiceImpl implements SweetItemService {
 
+	@Autowired
+	private SweetItemDao sweetdao;
 
-    @Autowired
-    private SweetItemDao sweetdao;
+	@Autowired
+	private SessionDao sdao;
 
-    @Autowired
-    private SessionDao sdao;
+	@Autowired
+	private SweetOrderDao sweetOrderDao;
 
-     @Autowired
-    private SweetOrderDao sweetOrderDao;
+	@Autowired
+	private CustomerDao cDao;
 
-    @Autowired
-    private CustomerDao cDao;
+	@Override
+	public SweetItem addSweetItem(SweetItem s, String Customerkey){
 
+		if (Customerkey.length() != 4) {
 
-    @Override
-    public SweetItem addSweetItem(SweetItem s, String Customerkey) throws SweetItemException, LoginException {
+			throw new LoginException("key is not valid ");
 
-        if (Customerkey.length() != 4) {
+		}
 
-            throw new LoginException("key is not valid ");
+		CurrentUserSession loginedcustomer = sdao.findByUuid(Customerkey);
 
-        }
+		if (loginedcustomer != null) {
 
-        CurrentUserSession loginedcustomer = sdao.findByUuid(Customerkey);
+			Optional<Customer> customer = cDao.findById(loginedcustomer.getUserId());
 
-        if (loginedcustomer != null) {
+			List<SweetOrder> sweetOrderList = customer.get().getSweetOrders();
 
-            Optional<Customer> customer = cDao.findById(loginedcustomer.getUserId());
+			if (sweetOrderList.size() == 0) {
+				SweetOrder sd = new SweetOrder();
+				sd.getSweetItems().add(s);
 
-            List<SweetOrder> sweetOrderList = customer.get().getSweetOrders();
+				sd.setCustomer(customer.get());
+				sd.setOrderedDate(LocalDate.now());
+				s.setSweetOrder(sd);
+
 
         //    if (sweetOrderList == null) {
 //                SweetOrder sd = new SweetOrder();
@@ -66,7 +73,23 @@ public class SweetItemServiceImpl implements SweetItemService {
 //
 //                return sweetItem;
 
-               // sweetOrderDao.save(sd);
+				SweetItem sweetItem = sweetdao.save(s);
+
+				return sweetItem;
+
+				// sweetOrderDao.save(sd);
+
+			} 
+			else if (LocalDate.now().compareTo(sweetOrderList.get(sweetOrderList.size()-1).getOrderedDate())>0){
+
+				SweetOrder sd = new SweetOrder();
+				sd.getSweetItems().add(s);
+
+
+				sd.setCustomer(customer.get());
+				sd.setOrderedDate(LocalDate.now());
+				s.setSweetOrder(sd);
+
 
 //            } else if ((LocalDate.now().compareTo(sweetOrderList.get(sweetOrderList.size() - 1).getOrderedDate()) > 0)) {
 //
@@ -91,7 +114,28 @@ public class SweetItemServiceImpl implements SweetItemService {
 
           //  sweetOrderDao.save(  sweetOrderList.get(sweetOrderList.size() - 1));
 
-                SweetItem sweetItem = sweetdao.save(s);
+				SweetItem sweetItem = sweetdao.save(s);
+
+				return sweetItem;
+			} 
+			else if ((LocalDate.now().compareTo(sweetOrderList.get(sweetOrderList.size() - 1).getOrderedDate()) == 0)) {
+
+				sweetOrderList.get(sweetOrderList.size() - 1).getSweetItems().add(s);
+
+				s.setSweetOrder(sweetOrderList.get(sweetOrderList.size() - 1));
+
+				SweetItem sweetItem = sweetdao.save(s);
+				// cDao.save(customer.get());
+
+
+				return sweetItem;
+			}
+			
+			else throw new SweetItemException("Can't be added");
+		} 
+		else throw new LoginException("customer not loggined first logged in ");
+	}
+
 
                 //cDao.save(customer.get());
 
@@ -122,11 +166,26 @@ public class SweetItemServiceImpl implements SweetItemService {
         if (loginedcustomer == null) throw new LoginException("User Not logedin");
 
         else {
+
+	@Override
+	public SweetItem UpdateSweetItem(SweetItem s, String Customerkey) {
+		if (Customerkey.length() != 4) {
+			throw new LoginException("key is not valid ");
+		}
+
+		CurrentUserSession loginedcustomer = sdao.findByUuid(Customerkey);
+
+		if (loginedcustomer == null)
+			throw new LoginException("User Not logedin");
+
+		else {
+
 //            Optional<SweetItem> currs = sweetdao.findById(s.getSweetItemId());
 //
 //            currs.get().setQuantity(s.getQuantity());
 //
 //            return sweetdao.save(currs.get());
+
 
             Optional<Customer> customer = cDao.findById(loginedcustomer.getUserId());
 
@@ -157,97 +216,110 @@ public class SweetItemServiceImpl implements SweetItemService {
 
             throw new SweetItemException("item not found ");
 
-        }
-    }
+			Optional<Customer> customer = cDao.findById(loginedcustomer.getUserId());
 
-    @Override
-    public SweetItem DeleteSweetItem(Integer SweetItemId, String Customerkey) throws SweetItemException {
+			List<SweetOrder> sweetOrderList = customer.get().getSweetOrders();
 
+			for (SweetOrder o : sweetOrderList) {
 
-        if (Customerkey.length() != 4) {
-            throw new LoginException("key is not valid ");
-        }
+				List<SweetItem> sweetItems = (List<SweetItem>) o.getSweetItems();
 
-        CurrentUserSession loginedcustomer = sdao.findByUuid(Customerkey);
+				for (SweetItem sItem : sweetItems) {
+					if (sItem.getSweetItemId() == s.getSweetItemId()) {
 
-        if (loginedcustomer == null) throw new LoginException("User Not logedin");
+						sItem.setQuantity(s.getQuantity());
 
-        else {
-            Optional<Customer> customer = cDao.findById(loginedcustomer.getUserId());
+						return sweetdao.save(sItem);
 
-            List<SweetOrder> sweetOrderList = customer.get().getSweetOrders();
+					}
 
-            for (SweetOrder o :
-                    sweetOrderList) {
+				}
+
+			}
 
                 List<SweetItem> sweetItems =  o.getSweetItems();
 
-                for (SweetItem sItem :
-                        sweetItems) {
-                    if (sItem.getSweetItemId() == SweetItemId) {
+			throw new SweetItemException("item not found ");
 
+		}
+	}
 
-                        sweetdao.delete(sItem);
+	@Override
+	public SweetItem DeleteSweetItem(Integer SweetItemId, String Customerkey) {
 
-                        return sItem;
+		if (Customerkey.length() != 4) {
+			throw new LoginException("key is not valid ");
+		}
 
-                    }
+		CurrentUserSession loginedcustomer = sdao.findByUuid(Customerkey);
 
+		if (loginedcustomer == null)
+			throw new LoginException("User Not logedin");
 
-                }
+		else {
+			Optional<Customer> customer = cDao.findById(loginedcustomer.getUserId());
 
+			List<SweetOrder> sweetOrderList = customer.get().getSweetOrders();
 
-            }
+			for (SweetOrder o : sweetOrderList) {
 
-            throw new SweetItemException("item not found ");
+				List<SweetItem> sweetItems = (List<SweetItem>) o.getSweetItems();
 
-        }
+				for (SweetItem sItem : sweetItems) {
+					if (sItem.getSweetItemId() == SweetItemId) {
 
+						sweetdao.delete(sItem);
 
-    }
+						return sItem;
 
+					}
 
-    @Override
-    public List<SweetItem> AllSweetItem(String Customerkey) throws SweetItemException {
+				}
 
-        if (Customerkey.length() != 4) {
-            throw new LoginException("key is not valid ");
-        }
+			}
 
-        CurrentUserSession loginedcustomer = sdao.findByUuid(Customerkey);
+			throw new SweetItemException("item not found ");
 
-        if (loginedcustomer == null) throw new LoginException("User Not logedin");
+		}
 
-        else {
-            Optional<Customer> customer = cDao.findById(loginedcustomer.getUserId());
+	}
 
-            List<SweetOrder> sweetOrderList = customer.get().getSweetOrders();
-            List<SweetItem> totalItemsyet = null;
+	@Override
+	public List<SweetItem> AllSweetItem(String Customerkey){
 
-            for (SweetOrder o :
-                    sweetOrderList) {
+		if (Customerkey.length() != 4) {
+			throw new LoginException("key is not valid ");
+		}
 
-                List<SweetItem> sweetItems = (List<SweetItem>) o.getSweetItems();
+		CurrentUserSession loginedcustomer = sdao.findByUuid(Customerkey);
 
-                for (SweetItem sItem :
-                        sweetItems) {
-                    totalItemsyet.add(sItem);
+		if (loginedcustomer == null)
+			throw new LoginException("User Not logedin");
 
+		else {
+			Optional<Customer> customer = cDao.findById(loginedcustomer.getUserId());
 
-                }
+			List<SweetOrder> sweetOrderList = customer.get().getSweetOrders();
+			List<SweetItem> totalItemsyet = null;
 
+			for (SweetOrder o : sweetOrderList) {
 
-            }
+				List<SweetItem> sweetItems = (List<SweetItem>) o.getSweetItems();
 
-            if (totalItemsyet.size() == 0) {
-                throw new SweetItemException("not sweet item found by this customer ");
-            }
+				for (SweetItem sItem : sweetItems) {
+					totalItemsyet.add(sItem);
 
-            return totalItemsyet;
-        }
+				}
 
+			}
 
-    }
+			if (totalItemsyet.size() == 0) {
+				throw new SweetItemException("not sweet item found by this customer ");
+			}
 
+			return totalItemsyet;
+		}
+
+	}
 
 }

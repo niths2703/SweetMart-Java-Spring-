@@ -33,8 +33,6 @@ public class SweetItem {
 	//@JoinColumn(name="sweetOrderId")
 	private SweetOrder sweetOrder;
 
-
-	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name= "productId")
 	private Product product;	
