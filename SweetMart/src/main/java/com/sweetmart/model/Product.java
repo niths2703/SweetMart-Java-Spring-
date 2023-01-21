@@ -25,5 +25,5 @@ public class Product {
 	  
 	  private String ingradient;
     
-		private String ingradient;
+		
 }
