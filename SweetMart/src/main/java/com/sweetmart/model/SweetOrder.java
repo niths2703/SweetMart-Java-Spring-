@@ -37,7 +37,7 @@ public class SweetOrder {
 	private LocalDate orderedDate;
 	
 	
-	private Boolean  isOrderPalced;
+	private Boolean  isOrderPalced= false;
 
 
 //	@Value("false")

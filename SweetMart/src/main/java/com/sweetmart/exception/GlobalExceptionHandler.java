@@ -97,6 +97,22 @@ public class GlobalExceptionHandler {
 
 
 	}
+	
+	
+	
+
+	@ExceptionHandler(OrderBillException.class)
+	public ResponseEntity<MyErrorDetails> orderBillExceptionHandler(OrderBillException se, WebRequest req){
+
+		MyErrorDetails err = new MyErrorDetails();
+		err.setTimestamp(LocalDateTime.now());
+		err.setMessage(se.getMessage());
+		err.setDetails(req.getDescription(false));
+
+		return new ResponseEntity<MyErrorDetails>(err, HttpStatus.BAD_REQUEST);
+
+
+	}
 
 
 }
