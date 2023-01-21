@@ -53,51 +53,55 @@ public class SweetItemServiceImpl implements SweetItemService {
 
             List<SweetOrder> sweetOrderList = customer.get().getSweetOrders();
 
-            if (sweetOrderList.size() == 0) {
-                SweetOrder sd = new SweetOrder();
-                sd.getSweetItems().add(s);
-
-                sd.setCustomer(customer.get());
-                sd.setOrderedDate(LocalDate.now());
-                s.setSweetOrder(sd);
-
-
-                SweetItem sweetItem = sweetdao.save(s);
-
-                return sweetItem;
+        //    if (sweetOrderList == null) {
+//                SweetOrder sd = new SweetOrder();
+//                sd.getSweetItems().add(s);
+//
+//                sd.setCustomer(customer.get());
+//                sd.setOrderedDate(LocalDate.now());
+//                s.setSweetOrder(sd);
+//
+//
+//                SweetItem sweetItem = sweetdao.save(s);
+//
+//                return sweetItem;
 
                // sweetOrderDao.save(sd);
 
-            } else if ((LocalDate.now().compareTo(sweetOrderList.get(sweetOrderList.size() - 1).getOrderedDate()) > 0)) {
-
-
-                SweetOrder sd = new SweetOrder();
-                sd.getSweetItems().add(s);
-
-                sd.setCustomer(customer.get());
-                sd.setOrderedDate(LocalDate.now());
-                s.setSweetOrder(sd);
-
-
-                SweetItem sweetItem = sweetdao.save(s);
-
-                return sweetItem;
-            } else if ((LocalDate.now().compareTo(sweetOrderList.get(sweetOrderList.size() - 1).getOrderedDate()) == 0)) {
-
-                sweetOrderList.get(sweetOrderList.size() - 1).getSweetItems().add(s);
-
+//            } else if ((LocalDate.now().compareTo(sweetOrderList.get(sweetOrderList.size() - 1).getOrderedDate()) > 0)) {
+//
+//
+//                SweetOrder sd = new SweetOrder();
+//                sd.getSweetItems().add(s);
+//
+//                sd.setCustomer(customer.get());
+//                sd.setOrderedDate(LocalDate.now());
+//                s.setSweetOrder(sd);
+//
+//
+//                SweetItem sweetItem = sweetdao.save(s);
+//
+//                return sweetItem;
+//            } else if ((LocalDate.now().compareTo(sweetOrderList.get(sweetOrderList.size() - 1).getOrderedDate()) == 0)) {
+//
+//                sweetOrderList.get(sweetOrderList.size() - 1).getSweetItems().add(s);
+//
                 s.setSweetOrder(sweetOrderList.get(sweetOrderList.size() - 1));
+            sweetOrderList.get(sweetOrderList.size() - 1).getSweetItems().add(s);
+
+          //  sweetOrderDao.save(  sweetOrderList.get(sweetOrderList.size() - 1));
 
                 SweetItem sweetItem = sweetdao.save(s);
+
                 //cDao.save(customer.get());
 
                 return sweetItem ;
-            }
-
-
-//            SweetItem sweetItem = sweetdao.save(s);
-
-  return null ;
+//            }
+//
+//
+////            SweetItem sweetItem = sweetdao.save(s);
+//
+//  return null ;
 
 
         } else {
@@ -131,7 +135,7 @@ public class SweetItemServiceImpl implements SweetItemService {
             for (SweetOrder o :
                     sweetOrderList) {
 
-                List<SweetItem> sweetItems = (List<SweetItem>) o.getSweetItems();
+                List<SweetItem> sweetItems =  o.getSweetItems();
 
                 for (SweetItem sItem :
                         sweetItems) {
@@ -176,7 +180,7 @@ public class SweetItemServiceImpl implements SweetItemService {
             for (SweetOrder o :
                     sweetOrderList) {
 
-                List<SweetItem> sweetItems = (List<SweetItem>) o.getSweetItems();
+                List<SweetItem> sweetItems =  o.getSweetItems();
 
                 for (SweetItem sItem :
                         sweetItems) {
