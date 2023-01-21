@@ -59,6 +59,20 @@ public class SweetItemServiceImpl implements SweetItemService {
 				sd.setOrderedDate(LocalDate.now());
 				s.setSweetOrder(sd);
 
+
+        //    if (sweetOrderList == null) {
+//                SweetOrder sd = new SweetOrder();
+//                sd.getSweetItems().add(s);
+//
+//                sd.setCustomer(customer.get());
+//                sd.setOrderedDate(LocalDate.now());
+//                s.setSweetOrder(sd);
+//
+//
+//                SweetItem sweetItem = sweetdao.save(s);
+//
+//                return sweetItem;
+
 				SweetItem sweetItem = sweetdao.save(s);
 
 				return sweetItem;
@@ -71,9 +85,34 @@ public class SweetItemServiceImpl implements SweetItemService {
 				SweetOrder sd = new SweetOrder();
 				sd.getSweetItems().add(s);
 
+
 				sd.setCustomer(customer.get());
 				sd.setOrderedDate(LocalDate.now());
 				s.setSweetOrder(sd);
+
+
+//            } else if ((LocalDate.now().compareTo(sweetOrderList.get(sweetOrderList.size() - 1).getOrderedDate()) > 0)) {
+//
+//
+//                SweetOrder sd = new SweetOrder();
+//                sd.getSweetItems().add(s);
+//
+//                sd.setCustomer(customer.get());
+//                sd.setOrderedDate(LocalDate.now());
+//                s.setSweetOrder(sd);
+//
+//
+//                SweetItem sweetItem = sweetdao.save(s);
+//
+//                return sweetItem;
+//            } else if ((LocalDate.now().compareTo(sweetOrderList.get(sweetOrderList.size() - 1).getOrderedDate()) == 0)) {
+//
+//                sweetOrderList.get(sweetOrderList.size() - 1).getSweetItems().add(s);
+//
+                s.setSweetOrder(sweetOrderList.get(sweetOrderList.size() - 1));
+            sweetOrderList.get(sweetOrderList.size() - 1).getSweetItems().add(s);
+
+          //  sweetOrderDao.save(  sweetOrderList.get(sweetOrderList.size() - 1));
 
 				SweetItem sweetItem = sweetdao.save(s);
 
@@ -88,6 +127,7 @@ public class SweetItemServiceImpl implements SweetItemService {
 				SweetItem sweetItem = sweetdao.save(s);
 				// cDao.save(customer.get());
 
+
 				return sweetItem;
 			}
 			
@@ -95,6 +135,37 @@ public class SweetItemServiceImpl implements SweetItemService {
 		} 
 		else throw new LoginException("customer not loggined first logged in ");
 	}
+
+
+                //cDao.save(customer.get());
+
+                return sweetItem ;
+//            }
+//
+//
+////            SweetItem sweetItem = sweetdao.save(s);
+//
+//  return null ;
+
+
+        } else {
+            throw new LoginException("customer not loggined first logged in ");
+        }
+
+
+    }
+
+    @Override
+    public SweetItem UpdateSweetItem(SweetItem s, String Customerkey) throws SweetItemException {
+        if (Customerkey.length() != 4) {
+            throw new LoginException("key is not valid ");
+        }
+
+        CurrentUserSession loginedcustomer = sdao.findByUuid(Customerkey);
+
+        if (loginedcustomer == null) throw new LoginException("User Not logedin");
+
+        else {
 
 	@Override
 	public SweetItem UpdateSweetItem(SweetItem s, String Customerkey) {
@@ -108,11 +179,42 @@ public class SweetItemServiceImpl implements SweetItemService {
 			throw new LoginException("User Not logedin");
 
 		else {
+
 //            Optional<SweetItem> currs = sweetdao.findById(s.getSweetItemId());
 //
 //            currs.get().setQuantity(s.getQuantity());
 //
 //            return sweetdao.save(currs.get());
+
+
+            Optional<Customer> customer = cDao.findById(loginedcustomer.getUserId());
+
+            List<SweetOrder> sweetOrderList = customer.get().getSweetOrders();
+
+            for (SweetOrder o :
+                    sweetOrderList) {
+
+                List<SweetItem> sweetItems =  o.getSweetItems();
+
+                for (SweetItem sItem :
+                        sweetItems) {
+                    if (sItem.getSweetItemId() == s.getSweetItemId()) {
+
+
+                        sItem.setQuantity(s.getQuantity());
+
+                        return sweetdao.save(sItem);
+
+
+                    }
+
+
+                }
+
+
+            }
+
+            throw new SweetItemException("item not found ");
 
 			Optional<Customer> customer = cDao.findById(loginedcustomer.getUserId());
 
@@ -134,6 +236,8 @@ public class SweetItemServiceImpl implements SweetItemService {
 				}
 
 			}
+
+                List<SweetItem> sweetItems =  o.getSweetItems();
 
 			throw new SweetItemException("item not found ");
 

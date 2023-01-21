@@ -29,4 +29,11 @@ public class LoginController {
 		
 		return customerLogin.logOutFromAccount(key);
 	}
+	
+	
+	
+	
+	
+	
+	
 }
