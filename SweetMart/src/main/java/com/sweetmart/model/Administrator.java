@@ -25,6 +25,7 @@ public class Administrator {
 	@Size(min = 10,max = 10,message = "Enter Valid Mobile Number")
 	private String mobile;
 	
+	@Size(min = 5,max = 10,message = "Enter Valid Password")
 	private String password;
 	
 	@OneToOne(cascade=CascadeType.ALL)
