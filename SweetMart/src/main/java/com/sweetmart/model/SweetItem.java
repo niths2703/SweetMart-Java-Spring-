@@ -28,12 +28,9 @@ public class SweetItem {
 
 	private Integer quantity;
 
-	@JsonIgnore
-	@ManyToOne(cascade = CascadeType.ALL)
-	//@JoinColumn(name="sweetOrderId")
-	private SweetOrder sweetOrder;
+	
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name= "productId")
+	@JoinColumn(name ="productId")
 	private Product product;	
 }

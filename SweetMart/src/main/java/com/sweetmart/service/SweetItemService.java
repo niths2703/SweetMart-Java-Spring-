@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface SweetItemService  {
 
-    public SweetItem addSweetItem(SweetItem s, String Customerkey)  throws SweetItemException ,LoginException  ;
-
-    public SweetItem UpdateSweetItem(SweetItem  s ,String Customerkey)  throws SweetItemException ,LoginException ;
-
-    public SweetItem DeleteSweetItem(Integer SweetItemId, String Customerkey)  throws SweetItemException,LoginException ;
-
-    public List<SweetItem> AllSweetItem( String Customerkey )  throws SweetItemException ,LoginException ;
+//    public SweetItem addSweetItem(SweetItem s, String Customerkey)  throws SweetItemException ,LoginException  ;
+//
+//    public SweetItem UpdateSweetItem(SweetItem  s ,String Customerkey)  throws SweetItemException ,LoginException ;
+//
+//    public SweetItem DeleteSweetItem(Integer SweetItemId, String Customerkey)  throws SweetItemException,LoginException ;
+//
+//    public List<SweetItem> AllSweetItem( String Customerkey )  throws SweetItemException ,LoginException ;
 
 
 }
