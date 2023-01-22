@@ -34,7 +34,7 @@ public class Customer {
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "customer")
 	private List<SweetOrder> sweetOrders;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name ="cartId")
-	private Cart cart;
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name ="cartId")
+//	private Cart cart;
 }

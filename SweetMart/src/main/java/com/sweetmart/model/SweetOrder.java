@@ -34,8 +34,9 @@ public class SweetOrder {
 	private Customer customer;
 
 
-	@OneToMany(cascade= CascadeType.ALL, mappedBy="sweetOrder")
-	private List<SweetItem> sweetItems ;
+	@OneToMany(cascade= CascadeType.ALL)
+	@JoinColumn(name= "sweetOrderID")
+	private List<SweetItem> sweetItems;
 
 	private LocalDateTime orderedDate;
 	

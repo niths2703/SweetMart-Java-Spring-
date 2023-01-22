@@ -20,24 +20,24 @@ import lombok.NoArgsConstructor;
 import net.bytebuddy.implementation.bind.annotation.Default;
 
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
+//@Data
+//@NoArgsConstructor
+//@AllArgsConstructor
+////@Entity
 public class Cart {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer cartId;
-	
-	@OneToOne(cascade=CascadeType.ALL)
-	private Customer customer;
-	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name="sweetItemId")
-	private List<SweetOrder> sweetOrders;
-   
-	private Integer totalPrice;
+//	@Id
+//	@GeneratedValue(strategy=GenerationType.AUTO)
+//	private Integer cartId;
+//	
+//	@OneToOne(cascade=CascadeType.ALL)
+//	private Customer customer;
+//	
+//	@OneToMany(cascade = CascadeType.ALL)
+//	@JoinColumn(name="sweetItemId")
+//	private List<SweetOrder> sweetOrders;
+//   
+//	private Integer totalPrice;
 	
 
 

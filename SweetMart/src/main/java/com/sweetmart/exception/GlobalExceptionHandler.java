@@ -95,7 +95,7 @@ public class GlobalExceptionHandler {
 
 		return new ResponseEntity<MyErrorDetails>(err, HttpStatus.BAD_REQUEST);
 	}
-<<<<<<< HEAD
+
 	
 	
 	
@@ -114,9 +114,5 @@ public class GlobalExceptionHandler {
 	}
 
 
-||||||| d1f2b30
 
-
-=======
->>>>>>> adea31183a1596b5d60022410a859f5172218f2e
 }

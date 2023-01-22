@@ -30,7 +30,7 @@ public class OrderBillController {
 	public LoginService loginService;
 	
 	
-	@PostMapping("/customer/orders")
+	@PostMapping("/customer/add")
 	public ResponseEntity<OrderBill> addOrderBillHandler(@RequestBody OrderBillDTO orderBillDTO){
 		      
 		

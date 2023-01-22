@@ -55,7 +55,7 @@ public class OrderBillServiceImp implements OrderBillService{
  
             				orderBill.setSweetOrders(sweetOrder);
             				int price = 0;
-            				  Set<SweetItem> sweetItems = sweetOrder.getSweetItems();
+            				  List<SweetItem> sweetItems = sweetOrder.getSweetItems();
             				  for(SweetItem s : sweetItems) {
             					    price +=   s.getProduct().getPrice() * s.getQuantity();
             				  }
@@ -91,7 +91,7 @@ public class OrderBillServiceImp implements OrderBillService{
 		public List<OrderBill> getAllOrderBillService(User user) throws OrderBillException {
 			// TODO Auto-generated method stub
 			           
-			       Optional<Customer> opt =  customerDao.findByUserId( user.getUserID());
+			       Optional<Customer> opt =  customerDao.findByUser(user);
 			       
 			       if(opt.isPresent()) {
 			    	        List<SweetOrder> sweetOrders =    opt.get().getSweetOrders();
@@ -99,7 +99,7 @@ public class OrderBillServiceImp implements OrderBillService{
 			    	        
 			    	        for(SweetOrder sweetOrder : sweetOrders) {
 			    	        	  if(sweetOrder.getIsOrderPalced() == true) {
-			    	        		Optional<OrderBill> opt1 =  orderBillDao.findBySweetOrderId(sweetOrder.getSweetOrderID());          
+			    	        		Optional<OrderBill> opt1 =  orderBillDao.findBySweetOrders(sweetOrder);          
 			    	        	          
 			    	        		if(opt1.isPresent()) {
 			    	        			   orderBills.add(opt1.get());
