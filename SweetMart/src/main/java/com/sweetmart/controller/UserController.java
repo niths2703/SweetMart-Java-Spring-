@@ -2,6 +2,8 @@ package com.sweetmart.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +28,7 @@ public class UserController {
     private UserService uservice;
 	
 	@PostMapping("/reg")
-	public ResponseEntity<User> registerUserCon(@RequestBody User user) {
+	public ResponseEntity<User> registerUserCon(@Valid @RequestBody User user) {
 		User u = uservice.registerUser(user);
 		
 		return new ResponseEntity<>(u,HttpStatus.ACCEPTED);
@@ -34,7 +36,7 @@ public class UserController {
 	}
 
 	@PutMapping("/update/{key}")
-	public ResponseEntity<User> updateuserCon(@RequestBody User user,@PathVariable String key) {
+	public ResponseEntity<User> updateuserCon(@Valid @RequestBody User user,@PathVariable String key) {
 		User u = uservice.updateuser(user, key);
 		
 		return new ResponseEntity<>(u,HttpStatus.ACCEPTED);

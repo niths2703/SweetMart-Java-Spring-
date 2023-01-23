@@ -59,6 +59,8 @@ public class OrderBillServiceImp implements OrderBillService{
             				  for(SweetItem s : sweetItems) {
             					    price +=   s.getProduct().getPrice() * s.getQuantity();
             				  }
+            				  sweetOrder.setIsOrderPalced(true);
+            				  sweetOrderDao.save(sweetOrder);
             				orderBill.setTotalPrice(price);
             	    	  
             			  return 	orderBillDao.save(orderBill);
@@ -127,18 +129,18 @@ public class OrderBillServiceImp implements OrderBillService{
 		
 	
 		@Override
-		public OrderBill getOrderBillByIdService(User user, Integer id) throws OrderBillException {
+		public OrderBill getOrderBillByIdService(User user, OrderBillDTO orderBillDTO) throws OrderBillException {
 			// TODO Auto-generated method stub
-		         Optional<OrderBill>   opt =orderBillDao.findById(id);    
+		         Optional<OrderBill>   opt =orderBillDao.findById(orderBillDTO.getOrdderId());    
 		              if(opt.isPresent()) {
 		            	      OrderBill orderBill =  opt.get();
 		            	      if(orderBill.getSweetOrders().getCustomer().getUser().getUserID() == user.getUserID()) {
 		            	    	      return orderBill;
 		            	      }else {
-		            	    	   throw new OrderBillException("There is no order bill with this id: "+id);
+		            	    	   throw new OrderBillException("There is no order bill with this id: "+orderBillDTO.getOrdderId());
 		            	      }
 		              }else {
-		            	  throw new OrderBillException("There is no order with this id: "+id);
+		            	  throw new OrderBillException("There is no order with this id: "+orderBillDTO.getOrdderId());
 		              }
 			    
 		}

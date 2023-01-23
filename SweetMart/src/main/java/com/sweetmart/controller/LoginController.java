@@ -1,4 +1,6 @@
 package com.sweetmart.controller;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ public class LoginController {
 	private LoginService customerLogin; 
 	
 	@PostMapping("/login")
-	public ResponseEntity<String> logInCustomer(@RequestBody LoginDTO dto) throws LoginException {
+	public ResponseEntity<String> logInCustomer(@Valid @RequestBody LoginDTO dto) throws LoginException {
 		String result = customerLogin.logIntoAccount(dto);
 		
 		return new ResponseEntity<String>(result,HttpStatus.OK );

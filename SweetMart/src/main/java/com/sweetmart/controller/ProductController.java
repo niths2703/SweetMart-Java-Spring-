@@ -1,5 +1,7 @@
 package com.sweetmart.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,7 @@ public class ProductController {
 	private ProductService pServ;
 	
 	@PostMapping("/add/{key}")
-	public ResponseEntity<Product> addProduct(@RequestBody Product p,@PathVariable String key  ){
+	public ResponseEntity<Product> addProduct(@Valid @RequestBody Product p,@PathVariable String key  ){
 		
 		Product pro=pServ.addProduct(key, p);
 		
@@ -30,7 +32,7 @@ public class ProductController {
 	}
 	
 	@PutMapping("/update/{key}")
-    public ResponseEntity<Product> updateProduct(@RequestBody Product p,@PathVariable String key ){
+    public ResponseEntity<Product> updateProduct(@Valid @RequestBody Product p,@PathVariable String key ){
 Product pro=pServ.updateProduct(key, p);
 		
 		return new ResponseEntity<>(pro,HttpStatus.ACCEPTED);

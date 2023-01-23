@@ -100,10 +100,10 @@ public class SweetOrderServiceImpl implements SweetOrderService {
 		   //  check for particular sweetOrder
 		   Optional<SweetOrder>  opt =  sweetOrderDao.findById(sweetOrderDTO.getSweetOrderId());
            
-		     if(opt.isPresent()) {
+		     if(opt.isPresent() ) {
 		    	     SweetOrder sweetOrder =   opt.get();
 		    	     
-		    	     
+		    	     if(!sweetOrder.getIsOrderPalced()) {
 		    	     
 		    	     List<SweetItem>  sweetItems = sweetOrder.getSweetItems();
 		  		   for(ProductQuantityDTO pq : pqs) {
@@ -124,6 +124,10 @@ public class SweetOrderServiceImpl implements SweetOrderService {
 		    	     
 		    	     
 		    	     return sweetOrderDao.save(sweetOrder);
+		    	     
+		    	     }else {
+		    	    	 throw new SweetOrderException("This order is already placed");
+		    	     }
 		    	     
 		     }else {
 		    	   throw new SweetOrderException("Order is not there with id:" + sweetOrderDTO.getSweetOrderId());
@@ -150,6 +154,7 @@ public class SweetOrderServiceImpl implements SweetOrderService {
 		      if(opt.isPresent()) {
 		    	    SweetOrder sweetOrder =   opt.get();
 		    	    
+		    	    if(!sweetOrder.getIsOrderPalced()) {
 		    	    List<SweetItem> sweetItems = sweetOrder.getSweetItems();
 		    	    boolean flag = false;
 		    	    for(SweetItem sweetItem: sweetItems) {
@@ -165,8 +170,11 @@ public class SweetOrderServiceImpl implements SweetOrderService {
 		    	    	
 		    	    	  return sweetOrderDao.save(sweetOrder);
 		    	    }else {
-		    	    	 throw new SweetOrderException("There is no sweet Itwm with this id"+sweetOrderDTO.getSweetItemQUantityDTO().getSweetItemId());
+		    	    	 throw new SweetOrderException("There is no sweet Item with this id "+sweetOrderDTO.getSweetItemQUantityDTO().getSweetItemId());
 		    	    }
+		    	 }else {
+		    	    	 throw new SweetOrderException("This order is already placed");
+		    	     }
 		      }else {
 		    	    throw new SweetOrderException("There is no sweet order sweet id :"+sweetOrderDTO.getSweetOrderId());
 		      }
