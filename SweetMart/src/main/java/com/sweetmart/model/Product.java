@@ -30,8 +30,8 @@ public class Product {
 	  private String productName;
 	  
 	  @Min(10)
-	  @NotNull(message = "price Mandatory")
-	  @NotEmpty(message = "Provide some valid price")
+//	  @NotNull(message = "price Mandatory")
+//	  @NotEmpty(message = "Provide some valid price")
 	  private Integer price;
 	  
 	  @Size(min = 5,max = 20,message = "ingradient size max:5 min:20")

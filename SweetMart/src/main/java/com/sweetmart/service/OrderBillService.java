@@ -19,7 +19,7 @@ public interface OrderBillService {
 	public List<OrderBill> getAllOrderBillService(User user) throws OrderBillException;
 	
 	
-	public OrderBill getOrderBillByIdService(User user, Integer id)  throws OrderBillException;
+	public OrderBill getOrderBillByIdService(User user,  OrderBillDTO orderBillDTO)  throws OrderBillException;
 	
 
 }

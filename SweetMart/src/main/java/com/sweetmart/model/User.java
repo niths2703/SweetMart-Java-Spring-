@@ -44,9 +44,9 @@ public class User {
 	@Size(min = 10,max = 10,message = "Enter Valid Mobile Number")
 	private String mobile;
 	
-	@NotNull(message = "type Mandatory")
-	@NotEmpty(message = "Provide some valid type`")
-	@Size(min = 5,max = 8,message = "type size must be max:5 min:8")
+//	@NotNull(message = "type Mandatory")
+//	@NotEmpty(message = "Provide some valid type`")
+//	@Size(min = 5,max = 8,message = "type size must be max:5 min:8")
 	private type type;
 
 	public User(String username, String password, String passwordConfirm,

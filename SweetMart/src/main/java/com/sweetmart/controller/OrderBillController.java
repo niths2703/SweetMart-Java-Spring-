@@ -30,7 +30,7 @@ public class OrderBillController {
 	public LoginService loginService;
 	
 	
-	@PostMapping("/customer/add")
+	@PostMapping("/customer/order/add")
 	public ResponseEntity<OrderBill> addOrderBillHandler(@RequestBody OrderBillDTO orderBillDTO){
 		      
 		
@@ -47,10 +47,10 @@ public class OrderBillController {
 	
 	
 	// get all order Bill
-	@PostMapping("/customer/orders")
-	public  ResponseEntity<List<OrderBill>> getAllOrderBillHandler(@RequestBody String key){
+	@PostMapping("/customer/orders/list")
+	public  ResponseEntity<List<OrderBill>> getAllOrderBillHandler(@RequestBody OrderBillDTO orderBillDTO){
 		   // check for credentials    
-				 User user =  loginService.checkForCrendentialsService(key); 
+				 User user =  loginService.checkForCrendentialsService(orderBillDTO.getKey()); 
 				 
 				 
 				List<OrderBill> orderBills = orderBillservice.getAllOrderBillService(user);
@@ -64,15 +64,15 @@ public class OrderBillController {
 	
 	
 	// get a order Bill by id
-	@PostMapping("/customer/orders/{id}")
-	public ResponseEntity<OrderBill>    getOrderBillByIdHandler(@PathVariable("id") Integer id,  @RequestBody String key){
+	@PostMapping("/customer/order/id")
+	public ResponseEntity<OrderBill>    getOrderBillByIdHandler(  @RequestBody OrderBillDTO orderBillDTO){
 		   
 		
 		// check for credentials
-		    User user =   loginService.checkForCrendentialsService(key);
+		    User user =   loginService.checkForCrendentialsService(orderBillDTO.getKey());
 		    
 		    
-		   OrderBill   orderBill =     orderBillservice.getOrderBillByIdService(user, id);
+		   OrderBill   orderBill =     orderBillservice.getOrderBillByIdService(user, orderBillDTO);
 		    
 		    
 		
