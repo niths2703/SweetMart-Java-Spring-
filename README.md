@@ -2,33 +2,13 @@
 
 Tech Stack
 
-Java
 
-Hibernate
+Java | Hibernate |Spring Framework |Spring Boot | Spring Data JPA | MySQL | Maven | Swagger UI
 
-Spring Framework
 
-Spring Boot
-
-Spring Data JPA
-
-MySQL
-
-Maven
-
-Swagger UI
 
 
 Services
 
-Login Service
 
-User Service
-
-SweetOrder Service
-
-SweetItem Service
-
-OrderBill Service
-
-Product Service
+Login Service | User Service | SweetOrder Service | SweetItem Service | OrderBill Service | Product Service
